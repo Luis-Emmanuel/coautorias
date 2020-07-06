@@ -1,0 +1,40 @@
+#Inicializamos el codigo importando las librerias csv y pandas, asi tambien llamamoas al archivo scopus
+
+import csv
+import pandas as pd
+
+scopus = pd.read_csv('scopus_7.csv')
+
+#Creamos una lista de listas con el archivo scopus, en este caso con las id's de los autores.
+
+count = 0
+list_id = list()
+
+for index, row in scopus.iterrows():
+    s = scopus.iloc[count,1]
+    s_split = s.split('\n')
+    s_split = s.split(';')
+    list_temp = list(s_split)
+    list_id.extend([s_split])
+    count = count+1
+    
+#Debido a que el proceso anterior hay un problema que es el que se agrga un elemento en blanco en cada lista se hace lo siguiente para eliminarlo.
+
+for elem in list_id:
+    elemento = elem
+    elemento.remove('')
+
+#Procedemos a hacer los enlaces entre autores por medio de las id's ya corregidas en un archivo csv
+
+with open('enlaces_3.csv','w',newline='') as csvfile:
+    fieldnames = {'origen','destino'}
+    writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+    writer.writeheader()
+    
+    for articulo in list_id:
+        for autor in articulo:
+            origen = autor
+            destinos = articulo
+            destinos.remove(origen)
+            for d in destinos:
+                writer.writerow({'origen':origen,'destino':d})
