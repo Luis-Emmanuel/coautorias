@@ -3,7 +3,7 @@
 import csv
 import pandas as pd
 
-scopus = pd.read_csv('scopus_7.csv')
+scopus = pd.read_csv('scopus.csv')
 
 #Creamos una lista de listas con el archivo scopus, en este caso con las id's de los autores.
 
@@ -26,7 +26,7 @@ for elem in list_id:
 
 #Procedemos a hacer los enlaces entre autores por medio de las id's ya corregidas en un archivo csv
 
-with open('enlaces_3.csv','w',newline='') as csvfile:
+with open('enlaces.csv','w',newline='') as csvfile:
     fieldnames = {'origen','destino'}
     writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
     writer.writeheader()
